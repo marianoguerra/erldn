@@ -1,0 +1,94 @@
+erldn - an edn parser for the erlang platform
+=============================================
+
+erldn is a parser for the edn specification.
+
+implemented using leex and yecc, tested with eunit.
+
+this is a low level parser, it gives you an erlang data structure where you
+have to decide how will you actually represent things like maps, sets, vectors
+since each person may have a different need, no imposition here.
+
+build
+-----
+
+::
+
+    ./rebar compile
+
+test
+----
+
+::
+
+    ./rebar eunit
+
+
+use
+---
+
+::
+
+    1> erldn:parse_str("{}").
+    {ok,{map,[]}}
+
+    2> erldn:parse_str("1").
+    {ok,1}
+
+    3> erldn:parse_str("true").
+    {ok,true}
+
+    4> erldn:parse_str("nil").
+    {ok,nil}
+
+    5> erldn:parse_str("[1 true nil]").
+    {ok,{vector,[1,true,nil]}}
+
+    6> erldn:parse_str("(1 true nil :foo)").
+    {ok,[1,true,nil,foo]}
+
+    7> erldn:parse_str("(1 true nil :foo ns/foo)").
+    {ok,[1,true,nil,foo,{symbol,'ns/foo'}]}
+
+    8> erldn:parse_str("#{1 true nil :foo ns/foo}").
+    {ok,{set,[1,true,nil,foo,{symbol,'ns/foo'}]}}
+
+    9> erldn:parse_str("#myapp/Person {:first \"Fred\" :last \"Mertz\"}").
+    {ok,{tag,'myapp/Person',
+             {map,[{first,"Fred"},{last,"Mertz"}]}}}
+             10> erldn:parse_str("#{1 true #_ nil :foo ns/foo}").
+             {ok,{set,[1,true,{ignore,nil},foo,{symbol,'ns/foo'}]}}
+             11> erldn:parse_str("#{1 true #_ 42 :foo ns/foo}").
+             {ok,{set,[1,true,{ignore,42},foo,{symbol,'ns/foo'}]}}
+
+type mappings
+-------------
+
+edn             erlang
+===             ======
+integer         integer
+float           float
+boolean         boolean
+nil             nil (atom)
+string          string
+list            list
+vector          tagged list -> {vector, [...]}
+map             tagged property list -> {map, [{key1, val1}, ...]}
+set             tagged list -> {set, [...]} (not made unique on parsing)
+tagged elements tagged tuple with tag and value -> {tag, Symbol, Value}
+
+TODO
+----
+
+* ignore single token (#_foo)
+* characters
+* comments
+* how to differentiate a string from edn and a list of integers?
+  + tag strings? like: {string, "asd"}
+* how to differentiate nil and the nil keyword (after parse nil == :nil)
+  + tag keywords? or just tag :nil?
+
+License
+-------
+
+MIT + optional beer for the author if you meet me

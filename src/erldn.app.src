@@ -1,0 +1,12 @@
+{application, erldn,
+ [
+  {description, "edn parser for erlang"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { erldn_app, []}},
+  {env, []}
+ ]}.
