@@ -1,7 +1,7 @@
 erldn - an edn parser for the erlang platform
 =============================================
 
-erldn is a parser for the edn specification.
+erldn is a parser for the `edn specification <https://github.com/edn-format/edn>`_.
 
 implemented using leex and yecc, tested with eunit.
 
@@ -9,14 +9,14 @@ this is a low level parser, it gives you an erlang data structure where you
 have to decide how will you actually represent things like maps, sets, vectors
 since each person may have a different need, no imposition here.
 
-build
+Build
 -----
 
 ::
 
     ./rebar compile
 
-test
+Test
 ----
 
 ::
@@ -24,7 +24,7 @@ test
     ./rebar eunit
 
 
-use
+Use
 ---
 
 ::
@@ -61,7 +61,7 @@ use
              11> erldn:parse_str("#{1 true #_ 42 :foo ns/foo}").
              {ok,{set,[1,true,{ignore,42},foo,{symbol,'ns/foo'}]}}
 
-type mappings
+Type Mappings
 -------------
 
 =============== ========================================================
@@ -89,6 +89,11 @@ TODO
   + tag strings? like: {string, "asd"}
 * how to differentiate nil and the nil keyword (after parse nil == :nil)
   + tag keywords? or just tag :nil?
+
+Author
+------
+
+marianoguerra
 
 License
 -------
