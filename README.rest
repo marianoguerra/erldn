@@ -64,8 +64,9 @@ use
 type mappings
 -------------
 
+=============== ========================================================
 edn             erlang
-===             ======
+=============== ========================================================
 integer         integer
 float           float
 boolean         boolean
@@ -76,6 +77,7 @@ vector          tagged list -> {vector, [...]}
 map             tagged property list -> {map, [{key1, val1}, ...]}
 set             tagged list -> {set, [...]} (not made unique on parsing)
 tagged elements tagged tuple with tag and value -> {tag, Symbol, Value}
+=============== ========================================================
 
 TODO
 ----
