@@ -82,9 +82,7 @@ tagged elements tagged tuple with tag and value -> {tag, Symbol, Value}
 TODO
 ----
 
-* ignore single token (#_foo)
 * characters
-* comments
 * how to differentiate a string from edn and a list of integers?
   + tag strings? like: {string, "asd"}
 * how to differentiate nil and the nil keyword (after parse nil == :nil)

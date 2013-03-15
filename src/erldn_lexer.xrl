@@ -19,6 +19,7 @@ Sharp       = #
 Symbol      = [\.\*\+\!\-\_\?\$%&=a-zA-Z][\.\*\+\!\-\_\?\$%&=a-zA-Z0-9:#]*
 Slash       = /
 Colon       = :
+Comments    = ;.*\n
 
 % string stuff
 String      = "(\\\^.|\\.|[^\"])*"
@@ -56,6 +57,7 @@ Rules.
 {Colon}{Symbol}{Slash}{Symbol}  : make_token(keyword, TokenLine, tl(TokenChars)).
 
 {Whites}                : skip_token.
+{Comments}              : skip_token.
 
 Erlang code.
 

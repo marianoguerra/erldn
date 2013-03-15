@@ -42,3 +42,7 @@ ns1_keyword_test() -> check(":org.marianoguerra/erldn",
 %char_return_test() -> check("\return", {char, 1, $\r}).
 
 ignore_token_test() -> check("#_", {ignore, 1, '#_'}).
+
+comment_test() -> check("1 ; this is a comment \n", {integer, 1, 1}).
+comment_inside_string_test() -> check("\"; this is NOT a comment\n\"",
+                                      {string, 1, "; this is NOT a comment\n"}).
