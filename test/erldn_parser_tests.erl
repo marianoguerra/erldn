@@ -76,6 +76,8 @@ uuid_test() -> check("#uuid \"f81d4fae-7dec-11d0-a765-00a0c91e6bf6\"",
                      {tag, uuid, "f81d4fae-7dec-11d0-a765-00a0c91e6bf6"}).
 
 ignore_next_test() -> check("#_ 4", {ignore, 4}).
+ignore_next_number_no_space_test() -> check("#_4", {ignore, 4}).
+ignore_next_atom_no_space_test() -> check("#_foo", {ignore, {symbol, foo}}).
 
 %char_test() -> check("\c", {char, $c}).
 %char1_test() -> check("\D", {char, $D}).

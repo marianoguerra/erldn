@@ -40,3 +40,5 @@ ns1_keyword_test() -> check(":org.marianoguerra/erldn",
 %char_tab_test() -> check("\tab", {char, 1, $\t}).
 %char_space_test() -> check("\space", {char, 1, 32}).
 %char_return_test() -> check("\return", {char, 1, $\r}).
+
+ignore_token_test() -> check("#_", {ignore, 1, '#_'}).

@@ -43,6 +43,7 @@ Rules.
 % identifiers and atoms
 {Bool}                   : make_token(boolean, TokenLine, TokenChars).
 {Nil}                    : make_token(nil, TokenLine, TokenChars).
+{Sharp}_                 : make_token(ignore, TokenLine, TokenChars).
 {Sharp}                  : make_token(sharp, TokenLine, TokenChars).
 {Symbol}                 : make_token(symbol, TokenLine, TokenChars).
 {Slash}                  : make_token(symbol, TokenLine, TokenChars).

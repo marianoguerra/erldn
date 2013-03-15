@@ -3,7 +3,7 @@ Nonterminals
 
 Terminals
     float integer boolean string nil open_list close_list open_vector
-    close_vector open_map close_map sharp keyword symbol char.
+    close_vector open_map close_map sharp ignore keyword symbol char.
 
 Rootsymbol value.
 
@@ -27,12 +27,7 @@ key_value_pairs -> key_value_pair key_value_pairs : ['$1'|'$2'].
 map -> open_map close_map : {map, []}.
 map -> open_map key_value_pairs close_map : {map, '$2'}.
 
-tagged -> sharp symbol value : 
-    Symbol = unwrap('$2'),
-    if
-        Symbol == '_' -> {ignore, '$3'};
-        true -> {tag, unwrap('$2'), '$3'}
-    end.
+tagged -> sharp symbol value : {tag, unwrap('$2'), '$3'}.
 
 value -> nil     : unwrap('$1').
 value -> float   : unwrap('$1').
@@ -47,6 +42,7 @@ value -> keyword : unwrap('$1').
 value -> symbol  : {symbol, unwrap('$1')}.
 value -> tagged  : '$1'.
 value -> char    : {char, unwrap('$1')}.
+value -> ignore value : {ignore, '$2'}.
 
 Erlang code.
 
