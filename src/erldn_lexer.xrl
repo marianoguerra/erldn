@@ -72,7 +72,7 @@ make_token(Name, Line, Chars, Fun) ->
 build_string(Type, Str, Line, _Len) ->
   StrLen = length(Str),
   StringContent = lists:sublist(Str, 2, StrLen - 2),
-  String = unescape_string(StringContent, Line),
+  String = binary:list_to_bin(unescape_string(StringContent, Line)),
   {token, {Type, Line, String}}.
 
 parse_number(Str) ->

@@ -71,7 +71,7 @@ integer         integer
 float           float
 boolean         boolean
 nil             nil (atom)
-string          string
+string          binary string (utf-8)
 list            list
 vector          tagged list -> {vector, [...]}
 map             tagged property list -> {map, [{key1, val1}, ...]}
@@ -82,9 +82,8 @@ tagged elements tagged tuple with tag and value -> {tag, Symbol, Value}
 TODO
 ----
 
+* encode strings in utf-8
 * characters
-* how to differentiate a string from edn and a list of integers?
-  + tag strings? like: {string, "asd"}
 
 Notes
 -----

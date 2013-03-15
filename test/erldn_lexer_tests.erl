@@ -15,8 +15,8 @@ bool_true_test() -> check("true", {boolean, 1, true}).
 bool_false_test() -> check("false", {boolean, 1, false}).
 bool_nil_test() -> check("nil", {nil, 1, nil}).
 
-string_test() -> check("\"hello\"", {string, 1, "hello"}).
-empty_string_test() -> check("\"\"", {string, 1, ""}).
+string_test() -> check("\"hello\"", {string, 1, <<"hello">>}).
+empty_string_test() -> check("\"\"", {string, 1, <<"">>}).
 
 sharp_test() -> check("#", {sharp, 1, '#'}).
 
@@ -45,4 +45,4 @@ ignore_token_test() -> check("#_", {ignore, 1, '#_'}).
 
 comment_test() -> check("1 ; this is a comment \n", {integer, 1, 1}).
 comment_inside_string_test() -> check("\"; this is NOT a comment\n\"",
-                                      {string, 1, "; this is NOT a comment\n"}).
+                                      {string, 1, <<"; this is NOT a comment\n">>}).
