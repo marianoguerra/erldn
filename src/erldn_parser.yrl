@@ -38,7 +38,12 @@ value -> list    : '$1'.
 value -> vector  : '$1'.
 value -> set     : '$1'.
 value -> map     : '$1'.
-value -> keyword : unwrap('$1').
+value -> keyword : 
+    Keyword = unwrap('$1'),
+    if
+        Keyword == nil -> {keyword, nil};
+        true -> Keyword
+    end.
 value -> symbol  : {symbol, unwrap('$1')}.
 value -> tagged  : '$1'.
 value -> char    : {char, unwrap('$1')}.

@@ -85,8 +85,12 @@ TODO
 * characters
 * how to differentiate a string from edn and a list of integers?
   + tag strings? like: {string, "asd"}
-* how to differentiate nil and the nil keyword (after parse nil == :nil)
-  + tag keywords? or just tag :nil?
+
+Notes
+-----
+
+* since keywords are mapped to atoms and nil is mapped to the nil atom, if
+  the nil keyword is encountered it will be mapped to {keyword, nil}.
 
 Author
 ------

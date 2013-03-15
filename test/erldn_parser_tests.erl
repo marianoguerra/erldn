@@ -61,6 +61,7 @@ ns1_symbol_test() -> check("org.marianoguerra/erldn",
                            {symbol, 'org.marianoguerra/erldn'}).
 
 simple_keyword_test() -> check(":foo", foo).
+nil_keyword_test() -> check(":nil", {keyword, nil}).
 slash_keyword_test() -> check(":/", '/').
 start_with_slash_keyword_test() -> check(":/foo", '/foo').
 ns_keyword_test() -> check(":ns/foo", 'ns/foo').
