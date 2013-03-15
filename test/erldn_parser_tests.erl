@@ -80,11 +80,11 @@ ignore_next_test() -> check("#_ 4", {ignore, 4}).
 ignore_next_number_no_space_test() -> check("#_4", {ignore, 4}).
 ignore_next_atom_no_space_test() -> check("#_foo", {ignore, {symbol, foo}}).
 
-%char_test() -> check("\c", {char, $c}).
-%char1_test() -> check("\D", {char, $D}).
-%char_newline_test() -> check("\newline", {char, $\n}).
-%char_tab_test() -> check("\tab", {char, $\t}).
-%char_space_test() -> check("\space", {char, 32}).
-%char_return_test() -> check("\return", {char, $\r}).
+char_test() -> check("\\c", {char, $c}).
+char1_test() -> check("\\D", {char, $D}).
+char_newline_test() -> check("\\newline", {char, $\n}).
+char_tab_test() -> check("\\tab", {char, $\t}).
+char_space_test() -> check("\\space", {char, 32}).
+char_return_test() -> check("\\return", {char, $\r}).
 
 comment_test() -> check("{1 ; comment \ntrue}", {map, [{1, true}]}).

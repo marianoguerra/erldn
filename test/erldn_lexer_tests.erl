@@ -34,12 +34,15 @@ ns_keyword_test() -> check(":ns/foo", {keyword, 1, 'ns/foo'}).
 ns1_keyword_test() -> check(":org.marianoguerra/erldn",
                            {keyword, 1, 'org.marianoguerra/erldn'}).
 
-%char_test() -> check("\c", {char, 1, $c}).
-%char1_test() -> check("\D", {char, 1, $D}).
-%char_newline_test() -> check("\newline", {char, 1, $\n}).
-%char_tab_test() -> check("\tab", {char, 1, $\t}).
-%char_space_test() -> check("\space", {char, 1, 32}).
-%char_return_test() -> check("\return", {char, 1, $\r}).
+char_test() -> check("\\c", {char, 1, $c}).
+char1_test() -> check("\\D", {char, 1, $D}).
+char2_test() -> check("\\$", {char, 1, $$}).
+char_newline_test() -> check("\\newline", {char, 1, $\n}).
+char_tab_test() -> check("\\tab", {char, 1, $\t}).
+char_space_test() -> check("\\space", {char, 1, 32}).
+char_return_test() -> check("\\return", {char, 1, $\r}).
+
+char_in_a_string_test() -> check("\"hi \\c !\"", {string, 1, <<"hi \\c !">>}).
 
 ignore_token_test() -> check("#_", {ignore, 1, '#_'}).
 

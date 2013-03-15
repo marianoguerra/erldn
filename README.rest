@@ -83,7 +83,7 @@ TODO
 ----
 
 * encode strings in utf-8
-* characters
+* to_string
 
 Notes
 -----

@@ -16,10 +16,15 @@ OpenVector  = \[
 CloseVector = \]
 Whites      = [\s|,\n]+
 Sharp       = #
-Symbol      = [\.\*\+\!\-\_\?\$%&=a-zA-Z][\.\*\+\!\-\_\?\$%&=a-zA-Z0-9:#]*
 Slash       = /
 Colon       = :
 Comments    = ;.*\n
+CharNewLine = \\newline
+CharReturn  = \\return
+CharTab     = \\tab
+CharSpace   = \\space
+BackSlash   = \\
+Symbol      = [\.\*\+\!\-\_\?\$%&=a-zA-Z][\.\*\+\!\-\_\?\$%&=a-zA-Z0-9:#]*
 
 % string stuff
 String      = "(\\\^.|\\.|[^\"])*"
@@ -42,6 +47,7 @@ Rules.
 {String}                 : build_string(string, TokenChars, TokenLine, TokenLen).
 
 % identifiers and atoms
+{BackSlash}.             : {token, {char, TokenLine, hd(tl(TokenChars))}}.
 {Bool}                   : make_token(boolean, TokenLine, TokenChars).
 {Nil}                    : make_token(nil, TokenLine, TokenChars).
 {Sharp}_                 : make_token(ignore, TokenLine, TokenChars).
@@ -55,6 +61,11 @@ Rules.
 {Colon}{Slash}                  : make_token(keyword, TokenLine, tl(TokenChars)).
 {Colon}{Slash}{Symbol}          : make_token(keyword, TokenLine, tl(TokenChars)).
 {Colon}{Symbol}{Slash}{Symbol}  : make_token(keyword, TokenLine, tl(TokenChars)).
+
+{CharNewLine}            : make_token(char, TokenLine, $\n).
+{CharReturn}             : make_token(char, TokenLine, $\r).
+{CharTab}                : make_token(char, TokenLine, $\t).
+{CharSpace}              : make_token(char, TokenLine, 32).
 
 {Whites}                : skip_token.
 {Comments}              : skip_token.
@@ -72,30 +83,8 @@ make_token(Name, Line, Chars, Fun) ->
 build_string(Type, Str, Line, _Len) ->
   StrLen = length(Str),
   StringContent = lists:sublist(Str, 2, StrLen - 2),
-  String = binary:list_to_bin(unescape_string(StringContent, Line)),
+  String = binary:list_to_bin(StringContent),
   {token, {Type, Line, String}}.
 
 parse_number(Str) ->
     list_to_integer(Str).
-
-unescape_string(String, Line) -> unescape_string(String, Line, []).
-
-unescape_string([], _Line, Output) ->
-  lists:reverse(Output);
-unescape_string([$\\, Escaped | Rest], Line, Output) ->
-  Char = map_escaped_char(Escaped, Line),
-  unescape_string(Rest, Line, [Char|Output]);
-unescape_string([Char|Rest], Line, Output) ->
-  unescape_string(Rest, Line, [Char|Output]).
-
-map_escaped_char(Escaped, Line) ->
-  case Escaped of
-    $\\ -> $\\;
-    $/ -> $/;
-    $\" -> $\";
-    $\' -> $\';
-    $n -> $\n;
-    $r -> $\r;
-    $t -> $\t;
-    _ -> throw({error, {Line, fng_lexer, ["unrecognized escape sequence: ", [$\\, Escaped]]}})
-  end.
