@@ -82,8 +82,7 @@ tagged elements tagged tuple with tag and value -> {tag, Symbol, Value}
 TODO
 ----
 
-* encode strings in utf-8
-* to_string
+nothing that I can think of!
 
 Notes
 -----

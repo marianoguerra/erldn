@@ -83,7 +83,7 @@ make_token(Name, Line, Chars, Fun) ->
 build_string(Type, Str, Line, _Len) ->
   StrLen = length(Str),
   StringContent = lists:sublist(Str, 2, StrLen - 2),
-  String = binary:list_to_bin(StringContent),
+  String = unicode:characters_to_binary(StringContent, utf8),
   {token, {Type, Line, String}}.
 
 parse_number(Str) ->
