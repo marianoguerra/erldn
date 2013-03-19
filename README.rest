@@ -61,6 +61,41 @@ Use
              11> erldn:parse_str("#{1 true #_ 42 :foo ns/foo}").
              {ok,{set,[1,true,{ignore,42},foo,{symbol,'ns/foo'}]}}
 
+     % to_string
+
+     10> {ok, Result} = erldn:parse_str("{:a 42}").
+     {ok,{map,[{a,42}]}}
+
+     11> io:format("~s~n", [erldn:to_string(Result)]).
+     {:a 42}
+     ok
+
+     % to_erlang
+
+     12> erldn:to_erlang(element(2, erldn:parse_str("[1, nil, :nil, \"asd\"]"))).
+     [1,nil,nil,<<"asd">>]
+
+API
+---
+
+parse_str/1
+    parses a string with edn into an erlang data structure maintaining all
+    the details from the original edn
+
+to_string/1
+    converts the result from *parse_str/1* into a edn string representation
+
+to_erlang/1
+    converts the result from *parse_str/1* into an erlang friendly version of
+    itself, see "To Erlang Mappings" below.
+
+to_erlang/2
+    like *to_erlang/1* but accepts a tuplelist as second argument with
+    tag as first argument and function (fun (Tag, Value, OtherHandlers) -> .. end)
+    as second of each pair to handle tagged values.
+    
+check the unit tests for usage examples.
+
 Type Mappings
 -------------
 
@@ -76,7 +111,33 @@ list            list
 vector          tagged list -> {vector, [...]}
 map             tagged property list -> {map, [{key1, val1}, ...]}
 set             tagged list -> {set, [...]} (not made unique on parsing)
+symbol          tagged atom -> {symbol, <symbol>}
 tagged elements tagged tuple with tag and value -> {tag, Symbol, Value}
+=============== ========================================================
+
+To Erlang Mappings
+------------------
+
+the to_erlang function transforms the incomming data structure into a more
+erlang friendly data structure, but this can't be converted back to string
+withouth transforming it again, the mappins by default are:
+
+=============== ========================================================
+edn             erlang
+=============== ========================================================
+integer         integer
+float           float
+boolean         boolean
+char            string
+nil (atom)      nil (atom)
+nil (symbol)    nil (atom)
+binary string   binary string
+list            list
+vector          list
+map             dict (dict module)
+set             set (sets module)
+symbol          stay the same
+tagged elements call registered handler for that tag, fail if not found
 =============== ========================================================
 
 TODO

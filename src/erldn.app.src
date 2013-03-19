@@ -1,7 +1,7 @@
 {application, erldn,
  [
   {description, "edn parser for erlang"},
-  {vsn, "1"},
+  {vsn, "1.0"},
   {registered, []},
   {applications, [
                   kernel,

@@ -1,5 +1,5 @@
 -module(erldn).
--export([lex_str/1, parse_str/1, to_string/1]).
+-export([lex_str/1, parse_str/1, to_string/1, to_erlang/1, to_erlang/2]).
 
 lex_str(Str) -> erldn_lexer:string(Str).
 
@@ -68,3 +68,27 @@ map_escaped_char(Char) ->
     _ -> Char
   end.
 
+key_vals_to_erlang({Key, Val}, Handlers) ->
+    {to_erlang(Key, Handlers), to_erlang(Val, Handlers)}.
+
+to_erlang(Val) -> to_erlang(Val, []).
+
+to_erlang({char, Char}, _Handlers) -> unicode:characters_to_binary([Char], utf8);
+to_erlang({keyword, nil}, _Handlers) -> nil;
+to_erlang({vector, Items}, Handlers) -> to_erlang(Items, Handlers);
+to_erlang({set, Items}, Handlers) -> sets:from_list(to_erlang(Items, Handlers));
+to_erlang({map, Kvs}, Handlers) ->
+    dict:from_list(lists:map(fun (V) -> key_vals_to_erlang(V, Handlers) end, Kvs));
+to_erlang(Val, Handlers) when is_list(Val) ->
+    lists:map(fun (V) -> to_erlang(V, Handlers) end, Val);
+to_erlang({tag, Tag, Val}, Handlers) ->
+    Result = lists:keyfind(Tag, 1, Handlers),
+
+    if
+        Result == false -> throw({handler_not_found_for_tag, Tag});
+        true ->
+            {_, Handler} = Result,
+            Handler(Tag, Val, Handlers)
+    end;
+
+to_erlang(Val, _Handlers) -> Val.
