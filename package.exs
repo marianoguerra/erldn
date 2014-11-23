@@ -1,9 +1,11 @@
 defmodule Erldn.Mixfile do
   use Mix.Project
 
+  @version File.read!("VERSION") |> String.strip
+
   def project do
     [app: :erldn,
-    version: "1.0.0",
+    version: @version,
     description: description,
     package: package,
     deps: deps]
