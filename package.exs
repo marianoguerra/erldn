@@ -22,7 +22,7 @@ defmodule Erldn.Mixfile do
   end
 
   defp package do
-    [files: ~w(src README.md LICENSE Makefile rebar),
+    [files: ~w(src README.md LICENSE VERSION Makefile rebar),
     contributors: ["Mariano Guerra"],
     licenses: ["MIT"],
     links: %{"GitHub" => "https://github.com/marianoguerra/erldn"}]
