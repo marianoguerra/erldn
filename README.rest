@@ -83,16 +83,16 @@ parse_str/1
     the details from the original edn
 
 to_string/1
-    converts the result from *parse_str/1* into a edn string representation
+    converts the result from *parse_str/1* into an edn string representation
 
 to_erlang/1
-    converts the result from *parse_str/1* into an erlang friendly version of
-    itself, see "To Erlang Mappings" below.
+    converts the result from *parse_str/1* into an erlang-friendly version of
+    itself; see "To Erlang Mappings" below.
 
 to_erlang/2
-    like *to_erlang/1* but accepts a tuplelist as second argument with
-    tag as first argument and function (fun (Tag, Value, OtherHandlers) -> .. end)
-    as second of each pair to handle tagged values.
+    like *to_erlang/1* but accepts a tuplelist as a second argument with a
+    tag as the first argument and a function `(fun (Tag, Value, OtherHandlers) -> .. end)`
+    as the second of each pair to handle tagged values.
     
 check the unit tests for usage examples.
 
@@ -106,6 +106,7 @@ integer         integer
 float           float
 boolean         boolean
 nil             nil (atom)
+char            tagged integer -> {char, <integer>}}
 string          binary string (utf-8)
 list            list
 vector          tagged list -> {vector, [...]}
@@ -118,9 +119,9 @@ tagged elements tagged tuple with tag and value -> {tag, Symbol, Value}
 To Erlang Mappings
 ------------------
 
-the to_erlang function transforms the incomming data structure into a more
-erlang friendly data structure, but this can't be converted back to string
-withouth transforming it again, the mappins by default are:
+The `to_erlang` function transforms the incoming data structure into a more
+erlang-friendly data structure, but this can't be converted back to a string
+without transforming it again. The mappings by default are:
 
 =============== ========================================================
 edn             erlang
