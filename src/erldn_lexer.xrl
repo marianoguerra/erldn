@@ -24,7 +24,7 @@ CharReturn  = \\return
 CharTab     = \\tab
 CharSpace   = \\space
 BackSlash   = \\
-Symbol      = [\.\*\+\!\-\_\?\$%&=a-zA-Z][\.\*\+\!\-\_\?\$%&=a-zA-Z0-9:#]*
+Symbol      = [\.\*\+\!\-\_\?\$%&=<>a-zA-Z][\.\*\+\!\-\_\?\$%&=<>a-zA-Z0-9:#]*
 
 % string stuff
 String      = "(\\\^.|\\.|[^\"])*"
