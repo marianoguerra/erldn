@@ -7,9 +7,19 @@ check(Str, Expected) ->
 
 integer_test() -> check("1", {integer, 1, 1}).
 integer_big_test() -> check("1234", {integer, 1, 1234}).
+integer_plus_test() -> check("+1234", {integer, 1, 1234}).
+integer_minus_test() -> check("-1234", {integer, 1, -1234}).
+integer_minus_zero_test() -> check("-0", {integer, 1, 0}).
+integer_arbitrary_precision_test() -> check("1234N", {integer, 1, 1234}).
 
 float_test() -> check("1.3", {float, 1, 1.3}).
 float_big_test() -> check("1.234", {float, 1, 1.234}).
+float_plus_test() -> check("+1.234", {float, 1, 1.234}).
+float_minus_test() -> check("-1.234", {float, 1, -1.234}).
+float_exp_test() -> check("1.234E1", {float, 1, 12.34}).
+float_plus_exp_test() -> check("1.234e+2", {float, 1, 123.4}).
+float_neg_exp_test() -> check("-1.234e-1", {float, 1, -0.1234}).
+float_exact_precision_test() -> check("1.234M", {float, 1, 1.234}).
 
 bool_true_test() -> check("true", {boolean, 1, true}).
 bool_false_test() -> check("false", {boolean, 1, false}).

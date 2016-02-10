@@ -4,8 +4,8 @@ Bool = (true|false)
 Nil  = nil
 
 % numbers
-Number      = [0-9]
-Float       = [0-9]+\.[0-9]+([eE][-+]?[0-9]+)?
+Number      = [+-]?[0-9]
+Float       = [+-]?[0-9]+\.[0-9]+([eE][-+]?[0-9]+)?
 
 % delimiters and operators
 OpenList    = \(
@@ -34,6 +34,8 @@ Rules.
 % numbers
 {Float}                  : make_token(float, TokenLine, TokenChars, fun erlang:list_to_float/1).
 {Number}+                : make_token(integer, TokenLine, TokenChars, fun parse_number/1).
+{Float}M                 : make_token(float, TokenLine, TokenChars, fun list_to_float_without_suffix/1).
+{Number}+N               : make_token(integer, TokenLine, TokenChars, fun parse_number_without_suffix/1).
 
 % delimiters and operators
 {OpenList}               : make_token(open_list, TokenLine, TokenChars).
@@ -88,3 +90,11 @@ build_string(Type, Str, Line, _Len) ->
 
 parse_number(Str) ->
     list_to_integer(Str).
+
+parse_number_without_suffix(Str) -> 
+    Init = lists:droplast(Str),
+    list_to_integer(Init).
+
+list_to_float_without_suffix(Str) -> 
+    Init = lists:droplast(Str),
+    erlang:list_to_float(Init).
