@@ -161,3 +161,13 @@ License
 -------
 
 MIT + optional beer for the author if you meet me
+
+Notes to myself
+---------------
+
+::
+
+    make clean
+    make
+    MIX_EXS=package.exs mix hex.publish
+
