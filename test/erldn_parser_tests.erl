@@ -62,6 +62,7 @@ ns1_symbol_test() -> check("org.marianoguerra/erldn",
 
 simple_keyword_test() -> check(":foo", foo).
 nil_keyword_test() -> check(":nil", {keyword, nil}).
+number_keyword_test() -> check(":300x450", '300x450').
 slash_keyword_test() -> check(":/", '/').
 start_with_slash_keyword_test() -> check(":/foo", '/foo').
 ns_keyword_test() -> check(":ns/foo", 'ns/foo').

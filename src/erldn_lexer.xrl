@@ -24,7 +24,7 @@ CharReturn  = \\return
 CharTab     = \\tab
 CharSpace   = \\space
 BackSlash   = \\
-Symbol      = [\.\*\+\!\-\_\?\$%&=<>a-zA-Z][\.\*\+\!\-\_\?\$%&=<>a-zA-Z0-9:#]*
+Symbol      = [\.\*\+\!\-\_\?\$%&=<>a-zA-Z0-9][\.\*\+\!\-\_\?\$%&=<>a-zA-Z0-9:#]*
 
 % string stuff
 String      = "(\\\^.|\\.|[^\"])*"
@@ -91,10 +91,10 @@ build_string(Type, Str, Line, _Len) ->
 parse_number(Str) ->
     list_to_integer(Str).
 
-parse_number_without_suffix(Str) -> 
+parse_number_without_suffix(Str) ->
     Init = lists:droplast(Str),
     list_to_integer(Init).
 
-list_to_float_without_suffix(Str) -> 
+list_to_float_without_suffix(Str) ->
     Init = lists:droplast(Str),
     erlang:list_to_float(Init).
